@@ -59,18 +59,57 @@ describe('ES6 EventEmitter Object', function () {
   });
 
   it('should stopListening to all events', function () {
+    let spy = sinon.spy();
+    let spy2 = sinon.spy();
+    let pr2 = new Publisher();
 
+    li.listenTo(pr, 'event1', spy);
+    li.listenTo(pr2, 'event2', spy2);
+
+    li.stopListening();
+
+    pr.trigger('event1');
+    pr2.trigger('event2');
+
+    expect(spy).to.not.have.been.called;
+    expect(spy2).to.not.have.been.called;
   });
 
   it('should stopListening to one specific object', function () {
+    let spy = sinon.spy();
+    let spy2 = sinon.spy();
+    let pr2 = new Publisher();
 
+    li.listenTo(pr, 'event1', spy);
+    li.listenTo(pr2, 'event2', spy2);
+
+    li.stopListening(pr2);
+
+    pr.trigger('event1');
+    pr2.trigger('event2');
+
+    expect(spy).to.have.been.calledOnce;
+    expect(spy2).to.not.have.been.called;
   });
 
   it('should stopListening to one specific event on an object', function () {
+    let spy = sinon.spy();
+    let spy2 = sinon.spy();
+    li.listenTo(pr, 'event1', spy);
+    li.listenTo(pr, 'event2', spy2);
+    li.stopListening(pr, 'event1');
+    pr.trigger('event1');
+    pr.trigger('event2');
 
+    expect(spy).to.not.have.been.called;
+    expect(spy2).to.have.been.called.once;
   });
 
   it('should stopListening only on one listener', function () {
+
+  });
+
+  it('should call multiple listeners for the same event', function () {
 
   });
 });

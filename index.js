@@ -28,34 +28,43 @@ class EventEmitter {
     return this;
   }
 
+  _removeListener(events, evt, listener) {
+    if (events && events[evt]) {
+      let i = events[evt].listeners.findIndex(listener);
+      if (i !== -1) events[evt].listeners.splice(i, 1);
+    }
+  }
+
   stopListening(obj, evt, listener) {
-    if (!obj) {
-      this._listeningTo.forEach((sym, obj) => {
-        if (obj._listeners.has(sym)) obj._listeners.delete(sym);
-      });
+    if (listener) {
+      let events = this._listeningTo.get(obj).events;
+      this._removeListener(events, evt, listener);
+
+      return this;
+    }
+
+    if (evt) {
+      let sym = this._listeningTo.get(obj);
+      if (sym) {
+        let events = obj._listeners.get(sym);
+        if (events && events[evt]) delete events[evt];
+      }
+
+      return this;
+    }
+
+    if (obj) {
+      let sym = this._listeningTo.get(obj);
+      if (sym) obj._listeners.delete(sym);
       this._listeningTo.delete(obj);
 
       return this;
     }
 
-    if (obj && evt && !listener) {
-      this._listeningTo.forEach((sym, obj) => {
-        let events = obj._listeners.get(sym);
-        if (events && events[evt]) delete events[evt];
-      });
-
-      return this;
-    }
-
-    if (obj && evt && listener) {
-      this._listeningTo.forEach((sym, obj) => {
-        let events = obj._listeners.get(sym);
-        if (events && events[evt]) {
-          let i = events[evt].listeners.findIndex(listener);
-          if (i !== -1) events[evt].listeners.splice(i, 1);
-        }
-      });
-    }
+    this._listeningTo.forEach((sym, obj) => {
+      if (obj._listeners.delete(sym));
+    });
+    this._listeningTo = new Map();
 
     return this;
   }
