@@ -46,7 +46,16 @@ describe('ES6 EventEmitter Object', function () {
   });
 
   it('should listenToOnce only once...', function () {
+    let spy = sinon.spy();
 
+    li.listenToOnce(pr, 'event1', spy);
+    pr.trigger('event1');
+    pr.trigger('event1');
+    pr.trigger('event1');
+    pr.trigger('event1');
+    pr.trigger('event1');
+
+    expect(spy).to.have.been.calledOnce;
   });
 
   it('should stopListening to all events', function () {
