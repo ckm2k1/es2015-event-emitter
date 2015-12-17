@@ -6,6 +6,8 @@
 
 ##### Usage:
 ```javascript
+let EventEmitter = require('es2015-event-emitter');
+
 class MyClass extends EventEmitter {}
 let mc = new MyClass();
 
