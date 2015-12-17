@@ -12,3 +12,6 @@ let mc = new MyClass();
 mc.listenTo(someObj, 'change', () => {});
 someObj.trigger('change');
 ```
+
+#### Run tests
+```npm test```
