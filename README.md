@@ -1,7 +1,7 @@
 ## Tiny, ES6 EventEmitter Class
 
 
-##### Installation: `npm install es6-event-emitter`
+##### Installation: `npm install es2015-event-emitter`
 -----------
 
 ##### Usage:
