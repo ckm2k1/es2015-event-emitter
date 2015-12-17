@@ -51,6 +51,14 @@ class EventEmitter {
     }
   }
 
+  /**
+   * Remove all listeners, all listeners from single object, single event
+   * or just one listener.
+   * @param  {object} obj      The object to remove listeners from.
+   * @param  {string} evt      The name of the event.
+   * @param  {function} listener The listener function to remove.
+   * @return {EventEmitter}
+   */
   stopListening(obj, evt, listener) {
     if (listener) {
       let sym = this._listeningTo.get(obj);
@@ -88,6 +96,12 @@ class EventEmitter {
     return this;
   }
 
+  /**
+   * Trigger an event on the current object.
+   * @param  {string}    evt  The name of the event.
+   * @param  {...Array} args Any arguments to forward to the listeners.
+   * @return {EventEmitter}
+   */
   trigger(evt, ...args) {
     for (let eventMap of this._listeners.values()) {
       let ev = eventMap[evt];
@@ -99,8 +113,17 @@ class EventEmitter {
     return this;
   }
 
+  /**
+   * Like listenTo, but will unbind the listener once the callback has been
+   * invoked once.
+   * @param  {object} obj      The object to listen to.
+   * @param  {string} evt      The name of the event.
+   * @param  {function} listener The callback function.
+   * @param  {object} ctx      Optional. Object to use as context for the callback.
+   * @return {EventEmitter}
+   */
   listenToOnce(obj, evt, listener, ctx) {
-    this.listenTo(obj, evt, (...args) => {
+    return this.listenTo(obj, evt, (...args) => {
       listener.call(ctx, ...args);
       this.stopListening(obj, evt);
     }, ctx);
