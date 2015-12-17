@@ -122,8 +122,27 @@ class EventEmitter {
     }, ctx);
   }
 
+  /**
+   * Analogous to the listenTo api, but will automatically
+   * listen to itself as the target object.
+   * @param  {string} evt      The name of the event
+   * @param  {function} listener The callback function.
+   * @param  {object} ctx      Optional. Object to be used as context for the callback.
+   * @return {EventEmitter}
+   */
   on(evt, listener, ctx) {
     return this.listenTo(this, evt, listener, ctx);
+  }
+
+  /**
+   * Analogous to stopListening but will automatically pass the current
+   * object as the target.
+   * @param  {string} evt      Optional. The name of the evt to remove listeners from.
+   * @param  {function} listener Optional. The specific listener to remove.
+   * @return {EventEmitter}
+   */
+  off(evt, listener) {
+    return this.stopListening(this, evt, listener);
   }
 }
 

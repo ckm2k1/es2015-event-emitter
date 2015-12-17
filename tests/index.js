@@ -167,4 +167,15 @@ describe('ES2015 EventEmitter Object', function() {
     expect(spy).to.have.been.calledOnce;
     expect(spy2).to.have.been.calledOnce;
   });
+
+  it('should with with .off api', function () {
+    let spy = sinon.spy();
+
+    li.on('event1', spy);
+    li.off('event1');
+
+    li.trigger('event1');
+
+    expect(spy).to.not.have.been.called;
+  });
 });
