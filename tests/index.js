@@ -102,14 +102,29 @@ describe('ES6 EventEmitter Object', function () {
     pr.trigger('event2');
 
     expect(spy).to.not.have.been.called;
-    expect(spy2).to.have.been.called.once;
+    expect(spy2).to.have.been.calledOnce;
   });
 
   it('should stopListening only on one listener', function () {
+    let spy = sinon.spy();
+    let spy2 = sinon.spy();
+    li.listenTo(pr, 'event1', spy);
+    li.listenTo(pr, 'event1', spy2);
+    li.stopListening(pr, 'event1', spy2);
+    pr.trigger('event1');
 
+    expect(spy).to.have.been.called;
+    expect(spy2).to.not.have.been.calledOnce;
   });
 
   it('should call multiple listeners for the same event', function () {
+    let spy = sinon.spy();
+    let spy2 = sinon.spy();
+    li.listenTo(pr, 'event1', spy);
+    li.listenTo(pr, 'event1', spy2);
+    pr.trigger('event1');
 
+    expect(spy).to.have.been.calledOnce;
+    expect(spy2).to.have.been.calledOnce;
   });
 });

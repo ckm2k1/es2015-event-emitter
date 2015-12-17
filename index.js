@@ -30,15 +30,21 @@ class EventEmitter {
 
   _removeListener(events, evt, listener) {
     if (events && events[evt]) {
-      let i = events[evt].listeners.findIndex(listener);
+      let i = -1;
+      events[evt].listeners.forEach((l, index) => {
+        if (Object.is(listener, l.fn)) i = index;
+      });
       if (i !== -1) events[evt].listeners.splice(i, 1);
     }
   }
 
   stopListening(obj, evt, listener) {
     if (listener) {
-      let events = this._listeningTo.get(obj).events;
-      this._removeListener(events, evt, listener);
+      let sym = this._listeningTo.get(obj);
+      if (sym) {
+        let events = obj._listeners.get(sym);
+        this._removeListener(events, evt, listener);
+      }
 
       return this;
     }
