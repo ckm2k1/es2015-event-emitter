@@ -11,7 +11,7 @@ chai.use(sinonChai);
 class Listener extends EventEmitter {}
 class Publisher extends EventEmitter {}
 
-describe('ES6 EventEmitter Object', function() {
+describe('ES2015 EventEmitter Object', function() {
   let li, pr;
 
   before(function() {

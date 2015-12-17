@@ -1,18 +1,24 @@
 {
-  "name": "es6-event-emitter",
+  "name": "es2015-event-emitter",
   "version": "0.0.1",
-  "description": "Very small implementation of event-emitter in ES6",
+  "description": "Very small implementation of event-emitter in E2015",
   "main": "index.js",
   "directories": {
     "test": "tests"
   },
   "scripts": {
-    "test": "mocha tests/*"
+    "test": "mocha --harmony tests/*"
+  },
+  "engines": {
+    "engines": {
+      "node": "~5.3.0"
+    }
   },
   "author": "Steve Venzerul",
   "license": "MIT",
   "devDependencies": {
     "chai": "^3.4.1",
+    "mocha": "^2.3.4",
     "sinon": "^1.17.2",
     "sinon-chai": "^2.8.0"
   }
