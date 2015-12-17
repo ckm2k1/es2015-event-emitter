@@ -8,16 +8,8 @@ let sinon = require('sinon');
 let sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 
-class Listener extends EventEmitter {
-  constructor() {
-    super();
-  }
-}
-class Publisher extends EventEmitter {
-  constructor() {
-    super();
-  }
-}
+class Listener extends EventEmitter {}
+class Publisher extends EventEmitter {}
 
 describe('ES2015 EventEmitter Object', function() {
   let li, pr;
