@@ -121,6 +121,10 @@ class EventEmitter {
       this.stopListening(obj, evt);
     }, ctx);
   }
+
+  on(evt, listener, ctx) {
+    return this.listenTo(this, evt, listener, ctx);
+  }
 }
 
 module.exports = EventEmitter;

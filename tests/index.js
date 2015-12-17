@@ -8,8 +8,16 @@ let sinon = require('sinon');
 let sinonChai = require('sinon-chai');
 chai.use(sinonChai);
 
-class Listener extends EventEmitter {}
-class Publisher extends EventEmitter {}
+class Listener extends EventEmitter {
+  constructor() {
+    super();
+  }
+}
+class Publisher extends EventEmitter {
+  constructor() {
+    super();
+  }
+}
 
 describe('ES2015 EventEmitter Object', function() {
   let li, pr;
@@ -149,6 +157,20 @@ describe('ES2015 EventEmitter Object', function() {
     li.listenTo(pr, 'event1', spy2);
 
     pr.trigger('event1');
+
+    expect(spy).to.have.been.calledOnce;
+    expect(spy2).to.have.been.calledOnce;
+  });
+
+  it('should work with the .on api', function () {
+    let spy = sinon.spy();
+    let spy2 = sinon.spy();
+
+    li.on('event1', spy);
+    li.on('event2', spy2);
+
+    li.trigger('event1');
+    li.trigger('event2');
 
     expect(spy).to.have.been.calledOnce;
     expect(spy2).to.have.been.calledOnce;
