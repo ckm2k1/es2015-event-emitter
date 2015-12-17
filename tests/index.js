@@ -38,7 +38,9 @@ describe('ES6 EventEmitter Object', function () {
 
   it('should forward arguments to the listener', function () {
     let spy = sinon.spy();
+
     li.listenTo(pr, 'change', spy);
+
     pr.trigger('change', 'abc', 123);
 
     expect(spy).to.have.been.calledOnce;
@@ -49,13 +51,30 @@ describe('ES6 EventEmitter Object', function () {
     let spy = sinon.spy();
 
     li.listenToOnce(pr, 'event1', spy);
-    pr.trigger('event1');
+    pr.trigger('event1', 'abc', 123);
     pr.trigger('event1');
     pr.trigger('event1');
     pr.trigger('event1');
     pr.trigger('event1');
 
     expect(spy).to.have.been.calledOnce;
+    expect(spy).to.have.been.calledWith('abc', 123);
+  });
+
+  it('should pass a context object to the listener', function () {
+    let spy = sinon.spy(function() {
+      expect(this.prop1).to.equal('xyz');
+      this.fn();
+    });
+
+    li.listenTo(pr, 'change', spy, {prop1: 'xyz', fn() {
+      expect(this.prop1).to.equal('xyz');
+    }});
+
+    pr.trigger('change', 'abc', 123);
+
+    expect(spy).to.have.been.calledOnce;
+    expect(spy).to.have.been.calledWith('abc', 123);
   });
 
   it('should stopListening to all events', function () {
@@ -65,7 +84,6 @@ describe('ES6 EventEmitter Object', function () {
 
     li.listenTo(pr, 'event1', spy);
     li.listenTo(pr2, 'event2', spy2);
-
     li.stopListening();
 
     pr.trigger('event1');
@@ -82,7 +100,6 @@ describe('ES6 EventEmitter Object', function () {
 
     li.listenTo(pr, 'event1', spy);
     li.listenTo(pr2, 'event2', spy2);
-
     li.stopListening(pr2);
 
     pr.trigger('event1');
@@ -95,9 +112,11 @@ describe('ES6 EventEmitter Object', function () {
   it('should stopListening to one specific event on an object', function () {
     let spy = sinon.spy();
     let spy2 = sinon.spy();
+
     li.listenTo(pr, 'event1', spy);
     li.listenTo(pr, 'event2', spy2);
     li.stopListening(pr, 'event1');
+
     pr.trigger('event1');
     pr.trigger('event2');
 
@@ -108,9 +127,11 @@ describe('ES6 EventEmitter Object', function () {
   it('should stopListening only on one listener', function () {
     let spy = sinon.spy();
     let spy2 = sinon.spy();
+
     li.listenTo(pr, 'event1', spy);
     li.listenTo(pr, 'event1', spy2);
     li.stopListening(pr, 'event1', spy2);
+
     pr.trigger('event1');
 
     expect(spy).to.have.been.called;
@@ -120,8 +141,10 @@ describe('ES6 EventEmitter Object', function () {
   it('should call multiple listeners for the same event', function () {
     let spy = sinon.spy();
     let spy2 = sinon.spy();
+
     li.listenTo(pr, 'event1', spy);
     li.listenTo(pr, 'event1', spy2);
+
     pr.trigger('event1');
 
     expect(spy).to.have.been.calledOnce;
