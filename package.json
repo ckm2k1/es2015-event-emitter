@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "Very small implementation of event-emitter in E2015",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ckm2k1/es2015-event-emitter.git"
+  },
   "directories": {
     "test": "tests"
   },
