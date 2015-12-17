@@ -13,5 +13,5 @@ mc.listenTo(someObj, 'change', () => {});
 someObj.trigger('change');
 ```
 
-#### Run tests
+##### Run tests:
 ```npm test```
