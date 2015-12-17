@@ -17,3 +17,9 @@ someObj.trigger('change');
 
 ##### Run tests:
 ```npm test```
+
+
+##### Notes:
+This currently only works with the `--harmony` flag passed to Node.
+A build step will be added shortly to make it work in ES5 environments,
+even though they already have plenty of EventEmitter implementations.
