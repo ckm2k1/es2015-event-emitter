@@ -60,32 +60,25 @@ class EventEmitter {
    * @return {EventEmitter}
    */
   stopListening(obj, evt, listener) {
-    if (listener) {
-      let sym = this._listeningTo.get(obj);
-      if (sym) {
+    let sym = this._listeningTo.get(obj);
+
+    if (sym) {
+      if (listener || evt) {
         let events = obj._listeners.get(sym);
-        this._removeListener(events, evt, listener);
+        if (listener) {
+          this._removeListener(events, evt, listener);
+        } else {
+          if (events && events[evt]) delete events[evt];
+        }
+        return this;
       }
 
-      return this;
-    }
+      if (obj) {
+        obj._listeners.delete(sym);
+        this._listeningTo.delete(obj);
 
-    if (evt) {
-      let sym = this._listeningTo.get(obj);
-      if (sym) {
-        let events = obj._listeners.get(sym);
-        if (events && events[evt]) delete events[evt];
+        return this;
       }
-
-      return this;
-    }
-
-    if (obj) {
-      let sym = this._listeningTo.get(obj);
-      if (sym) obj._listeners.delete(sym);
-      this._listeningTo.delete(obj);
-
-      return this;
     }
 
     this._listeningTo.forEach((sym, obj) => {
