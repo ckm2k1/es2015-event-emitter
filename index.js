@@ -74,7 +74,7 @@ class EventEmitter {
   listenToOnce(obj, evt, listener, ctx) {
     this.listenTo(obj, evt, (...args) => {
       listener.call(ctx || null, ...args);
-      this.stopListening(obj, evt, listener);
+      this.stopListening(obj, evt);
     }, ctx);
   }
 }
