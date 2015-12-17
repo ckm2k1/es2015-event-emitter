@@ -1,3 +1,4 @@
+'use strict';
 class EventEmitter {
   constructor() {
     this._listeningTo = new Map();
