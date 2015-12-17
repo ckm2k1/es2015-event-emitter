@@ -1,0 +1,10 @@
+{
+  "libs": [
+    "mocha",
+    "sinon"
+  ],
+  "plugins": {
+    "commonjs": {},
+    "node": {}
+  }
+}

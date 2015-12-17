@@ -1,0 +1,19 @@
+{
+  "name": "es6-event-emitter",
+  "version": "0.0.1",
+  "description": "Very small implementation of event-emitter in ES6",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "mocha tests/*"
+  },
+  "author": "Steve Venzerul",
+  "license": "MIT",
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "sinon": "^1.17.2",
+    "sinon-chai": "^2.8.0"
+  }
+}
