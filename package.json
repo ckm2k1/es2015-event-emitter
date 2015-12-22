@@ -1,6 +1,6 @@
 {
   "name": "es2015-event-emitter",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Very small implementation of event-emitter in ES2015",
   "main": "index.js",
   "repository": {
