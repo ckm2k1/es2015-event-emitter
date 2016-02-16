@@ -136,6 +136,18 @@ class EventEmitter {
   }
 
   /**
+   * Analogous to the listenToOnce api, but will automatically
+   * listen to itself as the target object.
+   * @param  {string} evt      The name of the event
+   * @param  {function} listener The callback function.
+   * @param  {object} ctx      Optional. Object to be used as context for the callback.
+   * @return {EventEmitter}
+   */
+  once(evt, listener, ctx) {
+    return this.listenToOnce(this, evt, listener, ctx);
+  }
+
+  /**
    * Analogous to stopListening but will automatically pass the current
    * object as the target.
    * @param  {string} evt      Optional. The name of the evt to remove listeners from.
