@@ -117,10 +117,12 @@ class EventEmitter {
    * @return {EventEmitter}
    */
   listenToOnce(obj, evt, listener, ctx) {
-    return this.listenTo(obj, evt, (...args) => {
+    let once = (...args) => {
       listener.call(ctx, ...args);
-      this.stopListening(obj, evt);
-    }, ctx);
+      this.stopListening(obj, evt, once);
+    }
+
+    return this.listenTo(obj, evt, once, ctx);
   }
 
   /**
